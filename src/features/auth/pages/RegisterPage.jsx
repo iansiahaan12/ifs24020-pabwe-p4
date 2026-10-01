@@ -28,7 +28,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
+    <main role="main" className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
       <div className="max-w-md w-full bg-white rounded-xl shadow-md p-8 border border-slate-200">
         <h2 className="text-2xl font-bold text-slate-800 mb-2 text-center">Daftar Akun Baru</h2>
         <p className="text-sm text-slate-500 mb-6 text-center">Bergabunglah untuk melaporkan barang hilang</p>
@@ -92,6 +92,6 @@ export default function RegisterPage() {
           </p>
         </form>
       </div>
-    </div>
+    </main>
   );
 }

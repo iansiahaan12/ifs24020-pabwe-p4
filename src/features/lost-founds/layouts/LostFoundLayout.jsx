@@ -53,7 +53,7 @@ export default function LostFoundLayout() {
       </header>
 
       {/* Konten Utama */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-6">
+      <main role="main" className="flex-1 max-w-7xl w-full mx-auto p-6">
         <Outlet />
       </main>
     </div>
