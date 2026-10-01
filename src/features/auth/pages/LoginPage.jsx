@@ -28,6 +28,7 @@ export default function LoginPage() {
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
             <input
+              id="login-email-input"
               type="email"
               value={email}
               onChange={onEmailChange}
@@ -39,6 +40,7 @@ export default function LoginPage() {
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Kata Sandi</label>
             <input
+              id="login-password-input"
               type="password"
               value={password}
               onChange={onPasswordChange}
@@ -48,6 +50,7 @@ export default function LoginPage() {
             />
           </div>
           <button
+            id="login-submit-button"
             type="submit"
             disabled={loading}
             className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200 disabled:opacity-50"
