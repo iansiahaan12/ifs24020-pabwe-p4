@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getAllUsers, getProfileMe, updateProfile, updateProfilePhoto, updatePassword } from '../api/userApi';
-import { showSuccessDialog, showErrorDialog } from '../../../helpers/toolsHelper';
-
+import { showSuccessDialog, showErrorDialog } from "@/helpers/toolsHelper";
 export const asyncGetAllUsers = createAsyncThunk('users/asyncGetAllUsers', async (_, thunkAPI) => {
   try {
     const response = await getAllUsers();

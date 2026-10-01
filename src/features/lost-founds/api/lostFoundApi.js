@@ -1,4 +1,4 @@
-import { apiHelper } from '../../../helpers/apiHelper';
+import { apiHelper } from "@/helpers/apiHelper";
 
 export async function getLostFounds(params = {}) {
   const query = new URLSearchParams(params).toString();

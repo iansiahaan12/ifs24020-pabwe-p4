@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login, register, getMe } from '../api/authApi';
-import { getAccessToken, putAccessToken, removeAccessToken } from '../../../helpers/apiHelper';
-import { showSuccessDialog, showErrorDialog } from '../../../helpers/toolsHelper';
+import { getAccessToken, putAccessToken, removeAccessToken } from "@/helpers/apiHelper";
+import { showSuccessDialog, showErrorDialog } from "@/helpers/toolsHelper";
 
 export const asyncLoginUser = createAsyncThunk(
   'auth/asyncLoginUser',

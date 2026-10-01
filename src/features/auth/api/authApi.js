@@ -1,4 +1,5 @@
-import { apiHelper } from '../../../helpers/apiHelper';
+import { apiHelper } from "@/helpers/apiHelper";
+import { showSuccessDialog } from "@/helpers/toolsHelper";
 
 export async function login({ email, password }) {
   const response = await apiHelper('/auth/login', {

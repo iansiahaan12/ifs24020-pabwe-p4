@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as api from '../api/lostFoundApi';
-import { showSuccessDialog, showErrorDialog } from '../../../helpers/toolsHelper';
+import { showSuccessDialog, showErrorDialog } from "@/helpers/toolsHelper";
 
 export const asyncGetLostFounds = createAsyncThunk('lostFounds/asyncGetLostFounds', async (params, thunkAPI) => {
   try {

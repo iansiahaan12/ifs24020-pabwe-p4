@@ -1,4 +1,4 @@
-import { apiHelper } from '../../../helpers/apiHelper';
+import { apiHelper } from "@/helpers/apiHelper";
 
 export async function getAllUsers() {
   const response = await apiHelper('/users', { method: 'GET' });
