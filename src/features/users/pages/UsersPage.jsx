@@ -12,7 +12,7 @@ export default function UsersPage() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-slate-800 mb-6">Daftar Pengguna</h2>
+      <h1 className="text-2xl font-bold text-slate-800 mb-6">Daftar Pengguna</h1>
       {loading ? (
         <p className="text-center text-slate-500 py-10">Memuat pengguna...</p>
       ) : (

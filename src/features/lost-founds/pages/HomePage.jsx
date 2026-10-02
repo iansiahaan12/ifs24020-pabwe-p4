@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-800">Daftar Laporan Barang</h2>
+        <h1 className="text-2xl font-bold text-slate-800">Daftar Laporan Barang</h1>
       </div>
 
       {loading ? (
@@ -29,7 +29,7 @@ export default function HomePage() {
                 onClick={() => navigate(`/lost-founds/${item.id}`)}
                 className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 cursor-pointer hover:shadow-md transition"
               >
-                <h3 className="font-semibold text-lg text-slate-800 mb-2">{item.title || item.name}</h3>
+                <h2 className="font-semibold text-lg text-slate-800 mb-2">{item.title || item.name}</h2>
                 <p className="text-sm text-slate-600 line-clamp-2 mb-4">{item.description}</p>
                 <span className="inline-block px-2.5 py-1 bg-blue-50 text-blue-600 text-xs font-semibold rounded-full">
                   {item.status || 'Aktif'}

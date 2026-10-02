@@ -22,7 +22,7 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-      <h2 className="text-2xl font-bold text-slate-800 mb-4">Profil Saya</h2>
+      <h1 className="text-2xl font-bold text-slate-800 mb-4">Profil Saya</h1>
       <div className="space-y-3">
         <div>
           <label className="text-xs font-semibold text-slate-400 uppercase">Nama</label>
