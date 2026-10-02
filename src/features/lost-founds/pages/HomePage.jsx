@@ -24,17 +24,22 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {lostFounds && lostFounds.length > 0 ? (
             lostFounds.map((item) => (
-              <div
+              <article
                 key={item.id}
                 onClick={() => navigate(`/lost-founds/${item.id}`)}
-                className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 cursor-pointer hover:shadow-md transition"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') navigate(`/lost-founds/${item.id}`);
+                }}
+                tabIndex={0}
+                role="button"
+                className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 cursor-pointer hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <h2 className="font-semibold text-lg text-slate-800 mb-2">{item.title || item.name}</h2>
                 <p className="text-sm text-slate-600 line-clamp-2 mb-4">{item.description}</p>
                 <span className="inline-block px-2.5 py-1 bg-blue-50 text-blue-600 text-xs font-semibold rounded-full">
                   {item.status || 'Aktif'}
                 </span>
-              </div>
+              </article>
             ))
           ) : (
             <p className="text-slate-500 col-span-3 text-center py-10">Belum ada laporan.</p>
