@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 
 export default function useDocumentTitle(title, description) {
   useEffect(() => {
-    const baseTitle = 'Lost & Founds App';
+    const baseTitle = 'Lost & Founds App - Pelaporan Barang Hilang & Temuan';
     if (title) {
-      document.title = `${title} | ${baseTitle}`;
+      document.title = title;
     } else {
-      document.title = `${baseTitle} - Pelaporan Barang Hilang & Temuan`;
+      document.title = baseTitle;
     }
 
     if (description) {
