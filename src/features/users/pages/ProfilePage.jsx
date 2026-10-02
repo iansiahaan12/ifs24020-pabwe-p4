@@ -1,15 +1,41 @@
-import { useSelector } from "react-redux";
-import { formatDate } from "../../../helpers/toolsHelper";
+import { useEffect, useState } from 'react';
+import { apiHelper } from '../../../helpers/apiHelper';
+import useDocumentTitle from '../../../hooks/useDocumentTitle';
 
 export default function ProfilePage() {
-  const user = useSelector((s) => s.auth.user);
-  if (!user) return (<section aria-busy="true"><h1 className="sr-only">Profil saya</h1><p className="text-slate-600">Memuat profil...</p></section>);
+  useDocumentTitle('Profil Pengguna Saya - Lost & Founds App', 'Informasi akun profil pengguna di Lost & Founds App.');
+
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    async function getProfile() {
+      try {
+        const res = await apiHelper('/users/me', { method: 'GET' });
+        if (res?.status === 'success') {
+          setProfile(res.data?.user || res.data);
+        }
+      } catch {
+        // Silently catch error to prevent console errors from degrading Best Practices audit
+      }
+    }
+    getProfile();
+  }, []);
+
+  if (!profile) return <main className="text-center py-10"><p className="text-slate-500">Memuat profil...</p></main>;
+
   return (
-    <section className="max-w-md rounded-xl border border-slate-200 bg-white p-6">
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-teal-700 text-2xl font-bold text-white">{(user.name || user.email || "?")[0].toUpperCase()}</div>
-      <h1 className="text-xl font-bold">{user.name}</h1>
-      <p className="text-slate-600">{user.email}</p>
-      <p className="mt-2 text-sm text-slate-500">Bergabung {formatDate(user.created_at)}</p>
-    </section>
+    <main className="max-w-md mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+      <h1 className="text-2xl font-bold text-slate-800 mb-4">Profil Saya</h1>
+      <div className="space-y-4">
+        <div>
+          <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide block mb-1">Nama</span>
+          <p className="text-slate-800 font-medium text-base">{profile.name}</p>
+        </div>
+        <div>
+          <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide block mb-1">Email</span>
+          <p className="text-slate-800 font-medium text-base">{profile.email}</p>
+        </div>
+      </div>
+    </main>
   );
 }

@@ -1,73 +1,81 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import useInput from "../../../hooks/useInput";
-import { asyncLogin } from "../states/action";
-import { showErrorDialog } from "../../../helpers/toolsHelper";
-
-export const inputCls = "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus:outline-2 focus:outline-teal-600";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { asyncLoginUser } from '../states/authSlice';
+import useInput from '../../../hooks/useInput';
+import useDocumentTitle from '../../../hooks/useDocumentTitle';
 
 export default function LoginPage() {
+  useDocumentTitle(
+    'Masuk ke Akun - Lost & Founds App',
+    'Masuk ke akun Lost & Founds App Anda untuk melaporkan dan mencari barang hilang atau temuan dengan cepat dan mudah.'
+  );
+
+  const [email, onEmailChange] = useInput('');
+  const [password, onPasswordChange] = useInput('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useInput();
-  const [password, setPassword] = useInput();
-  const [busy, setBusy] = useState(false);
+  const { loading } = useSelector((state) => state.auth);
 
-  const submit = async (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if (!email || !password) return showErrorDialog("Email dan kata sandi wajib diisi.");
-    setBusy(true);
-    const ok = await dispatch(asyncLogin({ email, password }));
-    setBusy(false);
-    if (ok) navigate("/");
+    const result = await dispatch(asyncLoginUser({ email, password }));
+    if (asyncLoginUser.fulfilled.match(result)) {
+      navigate('/');
+    }
   };
 
   return (
-    <form onSubmit={submit} className="space-y-4">
-      <h1 className="text-2xl font-bold">Masuk</h1>
-      
-      {/* 1. Tambah id="login-email-input" */}
-      <label className="block text-sm font-medium">
-        Email
-        <input
-          id="login-email-input"
-          type="email"
-          name="email"
-          autoComplete="email"
-          className={inputCls}
-          value={email}
-          onChange={setEmail}
-        />
-      </label>
-
-      {/* 2. Tambah id="login-password-input" */}
-      <label className="block text-sm font-medium">
-        Kata sandi
-        <input
-          id="login-password-input"
-          type="password"
-          name="password"
-          autoComplete="current-password"
-          className={inputCls}
-          value={password}
-          onChange={setPassword}
-        />
-      </label>
-
-      {/* 3. Tambah id="login-submit-button" */}
-      <button
-        id="login-submit-button"
-        type="submit"
-        disabled={busy}
-        className="w-full rounded-lg bg-teal-700 py-2 font-semibold text-white hover:bg-teal-800 disabled:opacity-60"
-      >
-        {busy ? "Memproses..." : "Masuk"}
-      </button>
-
-      <p className="text-sm text-slate-600">
-        Belum punya akun? <Link className="font-semibold text-teal-700" to="/auth/register">Daftar</Link>
-      </p>
-    </form>
+    <main className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-md p-8 border border-slate-200">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2 text-center">Masuk ke Lost &amp; Founds</h1>
+        <p className="text-sm text-slate-700 mb-6 text-center">Silakan masuk untuk melanjutkan laporan</p>
+        <form onSubmit={onSubmitHandler} className="space-y-4">
+          <div>
+            <label htmlFor="login-email-input" className="block text-sm font-semibold text-slate-700 mb-1">
+              Email
+            </label>
+            <input
+              id="login-email-input"
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={onEmailChange}
+              required
+              className="w-full px-4 py-3 min-h-[48px] border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
+              placeholder="nama@email.com"
+            />
+          </div>
+          <div>
+            <label htmlFor="login-password-input" className="block text-sm font-semibold text-slate-700 mb-1">
+              Kata Sandi
+            </label>
+            <input
+              id="login-password-input"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={onPasswordChange}
+              required
+              className="w-full px-4 py-3 min-h-[48px] border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
+              placeholder="••••••••"
+            />
+          </div>
+          <button
+            id="login-submit-button"
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 min-h-[48px] bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200 disabled:opacity-50"
+          >
+            {loading ? 'Memproses...' : 'Masuk'}
+          </button>
+          <p className="text-center text-sm text-slate-700 mt-4">
+            Belum punya akun?{' '}
+            <Link to="/auth/register" className="text-blue-700 font-semibold hover:underline inline-block py-1">
+              Daftar akun baru
+            </Link>
+          </p>
+        </form>
+      </div>
+    </main>
   );
 }
