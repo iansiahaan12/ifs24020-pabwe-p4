@@ -1,34 +1,31 @@
-const TOKEN_KEY = 'ACCESS_TOKEN';
+const TOKEN_KEY = "accessToken";
+export const getAccessToken = () => localStorage.getItem(TOKEN_KEY);
+export const putAccessToken = (token) => localStorage.setItem(TOKEN_KEY, token);
+export const removeAccessToken = () => localStorage.removeItem(TOKEN_KEY);
 
-export function getAccessToken() {
-  return localStorage.getItem(TOKEN_KEY);
-}
-
-export function putAccessToken(token) {
-  return localStorage.setItem(TOKEN_KEY, token);
-}
-
-export function removeAccessToken() {
-  return localStorage.removeItem(TOKEN_KEY);
-}
-
-export async function apiHelper(endpoint, options = {}) {
-  const token = getAccessToken();
-  const headers = {
-    ...(token && { Authorization: `Bearer ${token}` }),
-    ...options.headers,
-  };
-
-  if (options.body && !(options.body instanceof FormData)) {
-    headers['Content-Type'] = 'application/json';
-    headers['Accept'] = 'application/json';
-  }
-
-  const response = await fetch(`${DELCOM_BASEURL}${endpoint}`, {
-    ...options,
-    headers,
+export async function apiFetch(path, { method = "GET", body, form, params, auth = true } = {}) {
+  const url = new URL(DELCOM_BASEURL + path);
+  Object.entries(params || {}).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && v !== "") url.searchParams.set(k, v);
   });
-
-  const responseJson = await response.json();
-  return responseJson;
+  const headers = { Accept: "application/json" };
+  const token = getAccessToken();
+  if (token && auth) headers.Authorization = `Bearer ${token}`;
+  let payload;
+  if (form) payload = form;
+  else if (body) {
+    headers["Content-Type"] = "application/json";
+    payload = JSON.stringify(body);
+  }
+  const res = await fetch(url, { method, headers, body: payload, credentials: "omit" });
+  const json = await res.json().catch(() => null);
+  // API Delcom memakai { success: true } (sebagian versi { status: "success" }); terima keduanya.
+  const ok = json ? (json.success === true || json.status === "success") : false;
+  if (!ok) {
+    const err = new Error(json?.message || "Terjadi kesalahan");
+    err.status = res.status;
+    err.fields = json?.data;
+    throw err;
+  }
+  return json;
 }

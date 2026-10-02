@@ -1,97 +1,87 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
-import { asyncRegisterUser } from '../states/authSlice';
-import useInput from '../../../hooks/useInput';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import useInput from "../../../hooks/useInput";
+import { asyncRegister } from "../states/action";
+import { showErrorDialog } from "../../../helpers/toolsHelper";
+import { inputCls } from "./LoginPage";
 
 export default function RegisterPage() {
-  const [name, onNameChange] = useInput('');
-  const [email, onEmailChange] = useInput('');
-  const [password, onPasswordChange] = useInput('');
-  const [passwordConfirmation, onPasswordConfirmationChange] = useInput('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading } = useSelector((state) => state.auth);
+  const [name, setName] = useInput();
+  const [email, setEmail] = useInput();
+  const [password, setPassword] = useInput();
+  const [busy, setBusy] = useState(false);
 
-  const onSubmitHandler = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    if (password !== passwordConfirmation) {
-      alert('Konfirmasi kata sandi tidak cocok!');
-      return;
-    }
-    const result = await dispatch(
-      asyncRegisterUser({ name, email, password, password_confirmation: passwordConfirmation })
-    );
-    if (asyncRegisterUser.fulfilled.match(result)) {
-      navigate('/auth/login');
-    }
+    if (!name || !email || password.length < 6) return showErrorDialog("Lengkapi data; kata sandi minimal 6 karakter.");
+    setBusy(true);
+    const ok = await dispatch(asyncRegister({ name, email, password }));
+    setBusy(false);
+    if (ok) navigate("/auth/login");
   };
 
   return (
-    <main role="main" className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-md p-8 border border-slate-200">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2 text-center">Daftar Akun Baru</h1>
-        <p className="text-sm text-slate-500 mb-6 text-center">Bergabunglah untuk melaporkan barang hilang</p>
-        <form onSubmit={onSubmitHandler} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
-            <input
-              type="text"
-              value={name}
-              onChange={onNameChange}
-              required
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="Nama Anda"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={onEmailChange}
-              required
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="nama@email.com"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Kata Sandi</label>
-            <input
-              type="password"
-              value={password}
-              onChange={onPasswordChange}
-              required
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="••••••••"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Konfirmasi Kata Sandi</label>
-            <input
-              type="password"
-              value={passwordConfirmation}
-              onChange={onPasswordConfirmationChange}
-              required
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="••••••••"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200 disabled:opacity-50"
-          >
-            {loading ? 'Memproses...' : 'Daftar'}
-          </button>
-          <p className="text-center text-sm text-slate-600 mt-4">
-            Sudah punya akun?{' '}
-            <Link to="/auth/login" className="text-blue-600 font-medium hover:underline">
-              Masuk di sini
-            </Link>
-          </p>
-        </form>
-      </div>
-    </main>
+    <form onSubmit={submit} className="space-y-4">
+      <h1 className="text-2xl font-bold">Daftar akun</h1>
+      
+      {/* 1. Tambah id="register-name-input" */}
+      <label className="block text-sm font-medium">
+        Nama
+        <input
+          id="register-name-input"
+          type="text"
+          name="name"
+          autoComplete="name"
+          className={inputCls}
+          value={name}
+          onChange={setName}
+        />
+      </label>
+
+      {/* 2. Tambah id="register-email-input" */}
+      <label className="block text-sm font-medium">
+        Email
+        <input
+          id="register-email-input"
+          type="email"
+          name="email"
+          autoComplete="email"
+          className={inputCls}
+          value={email}
+          onChange={setEmail}
+        />
+      </label>
+
+      {/* 3. Tambah id="register-password-input" */}
+      <label className="block text-sm font-medium">
+        Kata sandi
+        <input
+          id="register-password-input"
+          type="password"
+          name="password"
+          autoComplete="new-password"
+          className={inputCls}
+          value={password}
+          onChange={setPassword}
+        />
+      </label>
+
+      {/* 4. Tambah id="register-submit-button" */}
+      <button
+        id="register-submit-button"
+        type="submit"
+        disabled={busy}
+        className="w-full rounded-lg bg-teal-700 py-2 font-semibold text-white hover:bg-teal-800 disabled:opacity-60"
+      >
+        {busy ? "Memproses..." : "Daftar"}
+      </button>
+
+      <p className="text-sm text-slate-600">
+        Sudah punya akun? <Link className="font-semibold text-teal-700" to="/auth/login">Masuk</Link>
+      </p>
+    </form>
   );
 }

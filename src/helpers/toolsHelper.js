@@ -1,39 +1,24 @@
-import Swal from 'sweetalert2';
-
-export const showSuccessDialog = (title, text) => {
-  return Swal.fire({
-    icon: 'success',
-    title,
-    text,
-    timer: 2000,
-    showConfirmButton: false,
-  });
+// SweetAlert2 dimuat hanya saat dialog pertama kali dibutuhkan (mengurangi unused JavaScript).
+const fire = async (options) => {
+  const { default: Swal } = await import("sweetalert2");
+  return Swal.fire(options);
 };
 
-export const showErrorDialog = (title, text) => {
-  return Swal.fire({
-    icon: 'error',
-    title,
-    text,
-  });
+export const showSuccessDialog = (text) => fire({ icon: "success", title: "Berhasil", text, confirmButtonColor: "#0f766e" });
+export const showErrorDialog = (text) => fire({ icon: "error", title: "Gagal", text, confirmButtonColor: "#0f766e" });
+export const showConfirmDialog = async (text) =>
+  (await fire({ icon: "warning", title: "Yakin?", text, showCancelButton: true, confirmButtonText: "Ya", cancelButtonText: "Batal", confirmButtonColor: "#be123c" })).isConfirmed;
+
+export const formatDate = (iso) =>
+  iso ? new Date(iso).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }) : "-";
+
+export const coverUrl = (path) => {
+  if (!path) return null;
+  if (/^https?:\/\//i.test(path)) return path;
+  return `${new URL(DELCOM_BASEURL).origin}/${String(path).replace(/^\/+/, "")}`;
 };
 
-export const showConfirmDialog = async (title, text) => {
-  const result = await Swal.fire({
-    icon: 'warning',
-    title,
-    text,
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Ya, Lanjutkan!',
-    cancelButtonText: 'Batal',
-  });
-  return result.isConfirmed;
-};
-
-export const formatDate = (dateString) => {
-  if (!dateString) return '-';
-  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-  return new Date(dateString).toLocaleDateString('id-ID', options);
+export const firstFieldError = (err) => {
+  const f = err?.fields?.field ?? Object.values(err?.fields || {})[0];
+  return Array.isArray(f) ? f[0] : err.message;
 };
