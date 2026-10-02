@@ -13,7 +13,7 @@ export default function HomePage() {
   }, [dispatch]);
 
   return (
-    <div>
+    <main role="main">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-slate-800">Daftar Laporan Barang</h1>
       </div>
@@ -41,6 +41,6 @@ export default function HomePage() {
           )}
         </div>
       )}
-    </div>
+    </main>
   );
 }

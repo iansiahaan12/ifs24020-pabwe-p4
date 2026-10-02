@@ -11,7 +11,7 @@ export default function UsersPage() {
   }, [dispatch]);
 
   return (
-    <div>
+    <main role="main">
       <h1 className="text-2xl font-bold text-slate-800 mb-6">Daftar Pengguna</h1>
       {loading ? (
         <p className="text-center text-slate-500 py-10">Memuat pengguna...</p>
@@ -19,12 +19,12 @@ export default function UsersPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {users && users.map((u) => (
             <div key={u.id} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <h3 className="font-semibold text-slate-800">{u.name}</h3>
+              <h2 className="font-semibold text-slate-800">{u.name}</h2>
               <p className="text-sm text-slate-500">{u.email}</p>
             </div>
           ))}
         </div>
       )}
-    </div>
+    </main>
   );
 }

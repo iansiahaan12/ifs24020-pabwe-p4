@@ -18,21 +18,21 @@ export default function ProfilePage() {
     getProfile();
   }, []);
 
-  if (!profile) return <p className="text-center py-10">Memuat profil...</p>;
+  if (!profile) return <main role="main" className="text-center py-10">Memuat profil...</main>;
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+    <main role="main" className="max-w-md mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
       <h1 className="text-2xl font-bold text-slate-800 mb-4">Profil Saya</h1>
       <div className="space-y-3">
         <div>
-          <label className="text-xs font-semibold text-slate-400 uppercase">Nama</label>
+          <label className="text-xs font-semibold text-slate-600 uppercase">Nama</label>
           <p className="text-slate-800 font-medium">{profile.name}</p>
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-400 uppercase">Email</label>
+          <label className="text-xs font-semibold text-slate-600 uppercase">Email</label>
           <p className="text-slate-800 font-medium">{profile.email}</p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
