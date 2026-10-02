@@ -29,14 +29,15 @@ export default function HomePage() {
               <Link
                 key={item.id}
                 to={`/lost-founds/${item.id}`}
+                aria-label={`Lihat detail laporan ${item.title || item.name}`}
                 className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-blue-500 block group"
               >
                 <article>
-                  <h2 className="font-semibold text-lg text-slate-800 mb-2 group-hover:text-blue-600 transition">
+                  <h2 className="font-semibold text-lg text-slate-800 mb-2 group-hover:text-blue-700 transition">
                     {item.title || item.name}
                   </h2>
-                  <p className="text-sm text-slate-600 line-clamp-2 mb-4">{item.description}</p>
-                  <span className="inline-block px-2.5 py-1 bg-blue-50 text-blue-600 text-xs font-semibold rounded-full">
+                  <p className="text-sm text-slate-700 line-clamp-2 mb-4">{item.description}</p>
+                  <span className="inline-block px-2.5 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
                     {item.status || 'Aktif'}
                   </span>
                 </article>

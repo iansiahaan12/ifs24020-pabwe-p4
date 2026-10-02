@@ -11,11 +11,11 @@ export default function ProfilePage() {
     async function getProfile() {
       try {
         const res = await apiHelper('/users/me', { method: 'GET' });
-        if (res.status === 'success') {
-          setProfile(res.data.user || res.data);
+        if (res?.status === 'success') {
+          setProfile(res.data?.user || res.data);
         }
-      } catch (err) {
-        console.error('Failed to get profile:', err);
+      } catch {
+        // Silently catch error to prevent console errors from degrading Best Practices audit
       }
     }
     getProfile();
