@@ -35,7 +35,7 @@ export default function RegisterPage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-md p-6 sm:p-8 border border-slate-200">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-md p-8 border border-slate-200">
         <h1 className="text-2xl font-bold text-slate-800 mb-2 text-center">Daftar Akun Baru</h1>
         <p className="text-sm text-slate-700 mb-6 text-center">Bergabunglah untuk melaporkan barang hilang</p>
         <form onSubmit={onSubmitHandler} className="space-y-4">
@@ -45,13 +45,12 @@ export default function RegisterPage() {
             </label>
             <input
               id="register-name-input"
-              name="name"
               type="text"
               autoComplete="name"
               value={name}
               onChange={onNameChange}
               required
-              className="w-full px-4 py-3 min-h-[48px] text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
+              className="w-full px-4 py-3 min-h-[48px] border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
               placeholder="Nama Anda"
             />
           </div>
@@ -61,13 +60,12 @@ export default function RegisterPage() {
             </label>
             <input
               id="register-email-input"
-              name="email"
               type="email"
               autoComplete="email"
               value={email}
               onChange={onEmailChange}
               required
-              className="w-full px-4 py-3 min-h-[48px] text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
+              className="w-full px-4 py-3 min-h-[48px] border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
               placeholder="nama@email.com"
             />
           </div>
@@ -77,13 +75,12 @@ export default function RegisterPage() {
             </label>
             <input
               id="register-password-input"
-              name="password"
               type="password"
               autoComplete="new-password"
               value={password}
               onChange={onPasswordChange}
               required
-              className="w-full px-4 py-3 min-h-[48px] text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
+              className="w-full px-4 py-3 min-h-[48px] border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
               placeholder="••••••••"
             />
           </div>
@@ -93,13 +90,12 @@ export default function RegisterPage() {
             </label>
             <input
               id="register-password-confirmation-input"
-              name="password_confirmation"
               type="password"
               autoComplete="new-password"
               value={passwordConfirmation}
               onChange={onPasswordConfirmationChange}
               required
-              className="w-full px-4 py-3 min-h-[48px] text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
+              className="w-full px-4 py-3 min-h-[48px] border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800"
               placeholder="••••••••"
             />
           </div>
@@ -107,20 +103,16 @@ export default function RegisterPage() {
             id="register-submit-button"
             type="submit"
             disabled={loading}
-            className="w-full py-3 min-h-[48px] bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200 disabled:opacity-50 text-base"
+            className="w-full py-3 min-h-[48px] bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200 disabled:opacity-50"
           >
             {loading ? 'Memproses...' : 'Daftar'}
           </button>
-          <div className="pt-3 text-center">
-            <span className="text-sm text-slate-700">Sudah punya akun? </span>
-            <Link
-              to="/auth/login"
-              className="text-blue-700 font-semibold hover:underline inline-flex items-center justify-center min-h-[48px] px-3 py-2 text-sm"
-              aria-label="Masuk ke akun Anda"
-            >
+          <p className="text-center text-sm text-slate-700 mt-4">
+            Sudah punya akun?{' '}
+            <Link to="/auth/login" className="text-blue-700 font-semibold hover:underline inline-block py-1">
               Masuk ke akun Anda
             </Link>
-          </div>
+          </p>
         </form>
       </div>
     </main>

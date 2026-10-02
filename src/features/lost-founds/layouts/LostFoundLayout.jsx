@@ -20,32 +20,32 @@ export default function LostFoundLayout() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header & Navigasi */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-3 shadow-sm">
+      <header className="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center shadow-sm">
         <Link
           to="/"
-          className="text-xl font-bold text-blue-700 hover:text-blue-800 transition min-h-[48px] inline-flex items-center"
+          className="text-xl font-bold text-blue-600 hover:text-blue-700 transition min-h-[44px] inline-flex items-center"
           aria-label="Lost &amp; Founds App Beranda"
         >
           Lost &amp; Founds App
         </Link>
-        <nav aria-label="Menu Utama" className="flex flex-wrap items-center gap-2 sm:gap-3">
+        <nav aria-label="Menu Utama" className="flex items-center gap-2 sm:gap-4">
           <Link
             to="/"
-            className="text-sm font-semibold text-slate-700 hover:text-blue-700 transition px-3.5 py-3 rounded-lg min-h-[48px] inline-flex items-center justify-center"
+            className="text-sm font-medium text-slate-700 hover:text-blue-600 transition px-3 py-2 rounded-lg min-h-[44px] inline-flex items-center"
             aria-label="Halaman Beranda Laporan"
           >
             Beranda
           </Link>
           <Link
             to="/users"
-            className="text-sm font-semibold text-slate-700 hover:text-blue-700 transition px-3.5 py-3 rounded-lg min-h-[48px] inline-flex items-center justify-center"
+            className="text-sm font-medium text-slate-700 hover:text-blue-600 transition px-3 py-2 rounded-lg min-h-[44px] inline-flex items-center"
             aria-label="Halaman Daftar Pengguna"
           >
             Pengguna
           </Link>
           <Link
             to="/profile"
-            className="text-sm font-semibold text-slate-700 hover:text-blue-700 transition px-3.5 py-3 rounded-lg min-h-[48px] inline-flex items-center justify-center"
+            className="text-sm font-medium text-slate-700 hover:text-blue-600 transition px-3 py-2 rounded-lg min-h-[44px] inline-flex items-center"
             aria-label="Halaman Profil Pengguna"
           >
             Profil
@@ -53,7 +53,7 @@ export default function LostFoundLayout() {
           <button
             onClick={handleLogout}
             type="button"
-            className="px-4 py-3 bg-red-700 hover:bg-red-800 text-white rounded-lg text-sm font-semibold transition min-h-[48px] inline-flex items-center justify-center shadow-sm"
+            className="px-4 py-2 bg-red-700 hover:bg-red-800 text-white rounded-lg text-sm font-semibold transition min-h-[44px] inline-flex items-center shadow-sm"
             aria-label="Keluar dari akun"
           >
             Keluar
@@ -61,8 +61,8 @@ export default function LostFoundLayout() {
         </nav>
       </header>
 
-      {/* Konten Utama Wrapper */}
-      <div className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6">
+      {/* Konten Utama Wrapper (div agar tidak bentrok dengan main di page component) */}
+      <div className="flex-1 max-w-7xl w-full mx-auto p-6">
         <Outlet />
       </div>
     </div>

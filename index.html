@@ -9,21 +9,13 @@
     <title>Lost &amp; Founds App - Pelaporan Barang Hilang &amp; Temuan</title>
     <meta name="description" content="Aplikasi web resmi untuk melaporkan dan mencari barang yang hilang atau ditemukan secara cepat, mudah, aman, dan transparan." />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-
-    <!-- Synchronous dynamic canonical tag to always match active origin and path -->
-    <script>
-      (function() {
-        var link = document.createElement('link');
-        link.rel = 'canonical';
-        link.href = window.location.origin + window.location.pathname;
-        document.head.appendChild(link);
-      })();
-    </script>
+    <link rel="canonical" href="https://ifs24020-pabwe2026-reactjs.vercel.app/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Lost &amp; Founds App" />
     <meta property="og:locale" content="id_ID" />
+    <meta property="og:url" content="https://ifs24020-pabwe2026-reactjs.vercel.app/" />
     <meta property="og:title" content="Lost &amp; Founds App - Pelaporan Barang Hilang &amp; Temuan" />
     <meta property="og:description" content="Aplikasi web resmi untuk melaporkan dan mencari barang yang hilang atau ditemukan secara cepat, mudah, aman, dan transparan." />
     <meta property="og:image" content="/logo.svg" />
@@ -50,6 +42,15 @@
         }
       }
     </script>
+
+    <!-- Asynchronous non-render-blocking font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+    </noscript>
   </head>
   <body class="bg-slate-50 text-slate-800 antialiased font-sans">
     <div id="root"></div>
