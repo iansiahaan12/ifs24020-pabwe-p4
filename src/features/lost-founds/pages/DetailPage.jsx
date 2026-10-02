@@ -1,51 +1,45 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { asyncGetLostFound, asyncDeleteLostFound } from "../states/action";
-import { coverUrl, formatDate } from "../../../helpers/toolsHelper";
-import { StatusBadge } from "./HomePage";
-import ChangeModal from "../modals/ChangeModal";
-import ChangeCoverModal from "../modals/ChangeCoverModal";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { apiHelper } from '../../../helpers/apiHelper';
 
 export default function DetailPage() {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const item = useSelector((s) => s.lostFounds.lostFound);
-  const me = useSelector((s) => s.auth.user);
-  const [modal, setModal] = useState(null);
-  const [failedId, setFailedId] = useState(null);
-  const [brokenId, setBrokenId] = useState(null);
-  const failed = failedId === id;
-  const load = async () => { const ok = await dispatch(asyncGetLostFound(id)); setFailedId(ok ? null : id); };
-  useEffect(() => {
-    let alive = true;
-    dispatch(asyncGetLostFound(id)).then((ok) => { if (alive) setFailedId(ok ? null : id); });
-    return () => { alive = false; };
-  }, [id, dispatch]);
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (failed) return (<section className="max-w-2xl space-y-3"><h1 className="text-2xl font-bold">Laporan tidak ditemukan</h1><p className="text-slate-600">Laporan ini tidak ada atau tidak bisa dimuat.</p><Link to="/" className="text-sm font-medium text-teal-700">← Kembali ke daftar</Link></section>);
-  if (!item) return (<section aria-busy="true"><h1 className="sr-only">Detail laporan</h1><p className="text-slate-600">Memuat laporan...</p></section>);
-  const owner = me && me.id === item.user_id;
-  const remove = async () => { if (await dispatch(asyncDeleteLostFound(item.id))) navigate("/"); };
+  useEffect(() => {
+    async function fetchDetail() {
+      try {
+        const res = await apiHelper(`/lost-founds/${id}`, { method: 'GET' });
+        if (res.status === 'success') {
+          setItem(res.data.lostFound || res.data);
+        }
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchDetail();
+  }, [id]);
+
+  if (loading) return <p className="text-center py-10">Memuat rincian...</p>;
+  if (!item) return <p className="text-center py-10 text-red-500">Data tidak ditemukan.</p>;
 
   return (
-    <article className="max-w-2xl space-y-4">
-      <Link to="/" className="text-sm font-medium text-teal-700">← Kembali ke daftar</Link>
-      {coverUrl(item.cover) && brokenId !== item.id ? <img src={coverUrl(item.cover)} alt={item.title} width="800" height="384" decoding="async" fetchPriority="high" onError={() => setBrokenId(item.id)} className="h-64 w-full rounded-xl bg-slate-100 object-contain sm:h-96" /> : <div className="flex h-48 items-center justify-center rounded-xl bg-slate-100 text-slate-600">Belum ada foto</div>}
-      <div className="flex items-center gap-2"><StatusBadge status={item.status} /><span className="text-sm text-slate-500">{item.is_completed === 1 ? "Selesai" : "Dalam proses"}</span></div>
-      <h1 className="text-3xl font-extrabold">{item.title}</h1>
-      <p className="whitespace-pre-line text-slate-700">{item.description}</p>
-      <p className="text-sm text-slate-500">Dilaporkan oleh {item.author?.name} pada {formatDate(item.created_at)}</p>
-      {owner && (
-        <div className="flex flex-wrap gap-2">
-          <button onClick={() => setModal("cover")} className="rounded-lg border border-slate-300 px-3 py-2 text-sm">Ganti cover</button>
-          <button onClick={() => setModal("edit")} className="rounded-lg border border-slate-300 px-3 py-2 text-sm">Ubah laporan</button>
-          <button onClick={remove} className="rounded-lg bg-rose-700 px-3 py-2 text-sm font-semibold text-white">Hapus</button>
-        </div>
-      )}
-      {modal === "edit" && <ChangeModal item={item} onClose={() => setModal(null)} onDone={load} />}
-      {modal === "cover" && <ChangeCoverModal id={item.id} onClose={() => setModal(null)} onDone={load} />}
-    </article>
+    <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+      <button
+        onClick={() => navigate(-1)}
+        className="mb-4 text-sm font-medium text-blue-600 hover:underline"
+      >
+        &larr; Kembali
+      </button>
+      <h2 className="text-3xl font-bold text-slate-800 mb-4">{item.title || item.name}</h2>
+      <p className="text-slate-600 mb-6 leading-relaxed">{item.description}</p>
+      <div className="border-t border-slate-100 pt-4 text-sm text-slate-500">
+        <p>Lokasi: {item.location || '-'}</p>
+        <p>Status: {item.status || '-'}</p>
+      </div>
+    </div>
   );
 }

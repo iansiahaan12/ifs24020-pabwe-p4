@@ -1,13 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./features/auth/states/reducer";
-import usersReducer from "./features/users/states/reducer";
-import lostFoundsReducer from "./features/lost-founds/states/reducer";
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './features/auth/states/authSlice';
+import userReducer from './features/users/states/userSlice';
+import lostFoundReducer from './features/lost-founds/states/lostFoundSlice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     auth: authReducer,
-    users: usersReducer,
-    lostFounds: lostFoundsReducer,
+    users: userReducer,
+    lostFounds: lostFoundReducer,
   },
 });
 

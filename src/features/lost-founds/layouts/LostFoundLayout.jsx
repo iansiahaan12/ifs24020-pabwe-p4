@@ -1,32 +1,61 @@
-import { useCallback, useEffect } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarComponent from "../components/NavbarComponent";
-import SidebarComponent from "../components/SidebarComponent";
-import { asyncGetProfile } from "../../users/states/action";
-import { asyncLogout } from "../../auth/states/action";
+import React, { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getAccessToken, removeAccessToken } from '../../../helpers/apiHelper';
 
 export default function LostFoundLayout() {
-  const { token, user } = useSelector((s) => s.auth);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!token) return;
-    dispatch(asyncGetProfile()).then((ok) => { if (!ok) dispatch(asyncLogout()); });
-  }, [token, dispatch]);
+    const token = getAccessToken();
+    if (!token) {
+      navigate('/auth/login');
+    }
+  }, [navigate]);
 
-  const logout = useCallback(async () => { await dispatch(asyncLogout()); navigate("/auth/login"); }, [dispatch, navigate]);
-
-  if (!token) return <Navigate to="/auth/login" replace />;
+  const handleLogout = () => {
+    removeAccessToken();
+    navigate('/auth/login');
+  };
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <NavbarComponent name={user?.name} onLogout={logout} />
-      <div className="flex flex-1 flex-col md:flex-row">
-        <SidebarComponent />
-        <main className="flex-1 p-4 md:p-6"><Outlet /></main>
-      </div>
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Navbar Sederhana */}
+      <header className="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center shadow-sm">
+        <h1 className="text-xl font-bold text-blue-600">Lost & Founds App</h1>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate('/')}
+            className="text-sm font-medium text-slate-600 hover:text-blue-600"
+          >
+            Beranda
+          </button>
+          <button
+            onClick={() => navigate('/users')}
+            className="text-sm font-medium text-slate-600 hover:text-blue-600"
+          >
+            Pengguna
+          </button>
+          <button
+            onClick={() => navigate('/profile')}
+            className="text-sm font-medium text-slate-600 hover:text-blue-600"
+          >
+            Profil
+          </button>
+          <button
+            onClick={handleLogout}
+            className="px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-sm font-medium hover:bg-red-100 transition"
+          >
+            Keluar
+          </button>
+        </div>
+      </header>
+
+      {/* Konten Utama */}
+      <main role="main" className="flex-1 max-w-7xl w-full mx-auto p-6">
+        <Outlet />
+      </main>
     </div>
   );
 }
