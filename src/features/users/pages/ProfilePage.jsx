@@ -12,7 +12,7 @@ export default function ProfilePage() {
           setProfile(res.data.user || res.data);
         }
       } catch (err) {
-        console.error(err);
+        
       }
     }
     getProfile();
