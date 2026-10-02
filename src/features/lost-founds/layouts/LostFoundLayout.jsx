@@ -61,10 +61,10 @@ export default function LostFoundLayout() {
         </nav>
       </header>
 
-      {/* Konten Utama */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-6">
+      {/* Konten Utama Wrapper (div agar tidak bentrok dengan main di page component) */}
+      <div className="flex-1 max-w-7xl w-full mx-auto p-6">
         <Outlet />
-      </main>
+      </div>
     </div>
   );
 }

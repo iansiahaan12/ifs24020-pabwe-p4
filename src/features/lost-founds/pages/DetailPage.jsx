@@ -10,7 +10,7 @@ export default function DetailPage() {
   const [loading, setLoading] = useState(true);
 
   useDocumentTitle(
-    item ? `${item.title || item.name} - Detail` : 'Detail Laporan',
+    item ? `${item.title || item.name} - Detail - Lost & Founds App` : 'Detail Laporan Barang - Lost & Founds App',
     item ? item.description : 'Rincian informasi barang hilang atau temuan.'
   );
 
@@ -30,24 +30,25 @@ export default function DetailPage() {
     fetchDetail();
   }, [id]);
 
-  if (loading) return <p className="text-center py-10">Memuat rincian...</p>;
-  if (!item) return <p className="text-center py-10 text-red-500">Data tidak ditemukan.</p>;
+  if (loading) return <main className="text-center py-10"><p className="text-slate-500">Memuat rincian...</p></main>;
+  if (!item) return <main className="text-center py-10"><p className="text-red-600 font-medium">Data tidak ditemukan.</p></main>;
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+    <main className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
       <button
         onClick={() => navigate(-1)}
         type="button"
-        className="mb-4 text-sm font-medium text-blue-600 hover:underline inline-flex items-center gap-1"
+        className="mb-4 text-sm font-semibold text-blue-700 hover:underline inline-flex items-center gap-1 min-h-[44px]"
+        aria-label="Kembali ke halaman sebelumnya"
       >
         &larr; Kembali
       </button>
       <h1 className="text-3xl font-bold text-slate-800 mb-4">{item.title || item.name}</h1>
       <p className="text-slate-600 mb-6 leading-relaxed">{item.description}</p>
-      <div className="border-t border-slate-100 pt-4 text-sm text-slate-500 space-y-1">
+      <div className="border-t border-slate-100 pt-4 text-sm text-slate-600 space-y-1">
         <p><span className="font-semibold text-slate-700">Lokasi:</span> {item.location || '-'}</p>
         <p><span className="font-semibold text-slate-700">Status:</span> {item.status || '-'}</p>
       </div>
-    </div>
+    </main>
   );
 }

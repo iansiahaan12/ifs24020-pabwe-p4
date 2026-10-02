@@ -3,7 +3,7 @@ import { apiHelper } from '../../../helpers/apiHelper';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
 
 export default function ProfilePage() {
-  useDocumentTitle('Profil Saya', 'Informasi akun profil pengguna di Lost & Founds App.');
+  useDocumentTitle('Profil Pengguna Saya - Lost & Founds App', 'Informasi akun profil pengguna di Lost & Founds App.');
 
   const [profile, setProfile] = useState(null);
 
@@ -21,21 +21,21 @@ export default function ProfilePage() {
     getProfile();
   }, []);
 
-  if (!profile) return <p className="text-center py-10 text-slate-500">Memuat profil...</p>;
+  if (!profile) return <main className="text-center py-10"><p className="text-slate-500">Memuat profil...</p></main>;
 
   return (
-    <section aria-labelledby="profile-title" className="max-w-md mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-      <h1 id="profile-title" className="text-2xl font-bold text-slate-800 mb-4">Profil Saya</h1>
+    <main className="max-w-md mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+      <h1 className="text-2xl font-bold text-slate-800 mb-4">Profil Saya</h1>
       <div className="space-y-4">
         <div>
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1">Nama</span>
+          <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide block mb-1">Nama</span>
           <p className="text-slate-800 font-medium text-base">{profile.name}</p>
         </div>
         <div>
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1">Email</span>
+          <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide block mb-1">Email</span>
           <p className="text-slate-800 font-medium text-base">{profile.email}</p>
         </div>
       </div>
-    </section>
+    </main>
   );
 }

@@ -4,7 +4,7 @@ import { asyncGetAllUsers } from '../states/userSlice';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
 
 export default function UsersPage() {
-  useDocumentTitle('Daftar Pengguna', 'Daftar pengguna terdaftar di platform Lost & Founds App.');
+  useDocumentTitle('Daftar Pengguna Terdaftar - Lost & Founds App', 'Daftar pengguna terdaftar di platform Lost & Founds App.');
 
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.users);
@@ -14,7 +14,7 @@ export default function UsersPage() {
   }, [dispatch]);
 
   return (
-    <div className="space-y-6">
+    <main className="space-y-6">
       <h1 className="text-2xl font-bold text-slate-800">Daftar Pengguna</h1>
       {loading ? (
         <p className="text-center text-slate-500 py-10">Memuat pengguna...</p>
@@ -23,11 +23,11 @@ export default function UsersPage() {
           {users && users.map((u) => (
             <div key={u.id} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
               <h2 className="font-semibold text-slate-800">{u.name}</h2>
-              <p className="text-sm text-slate-500">{u.email}</p>
+              <p className="text-sm text-slate-600">{u.email}</p>
             </div>
           ))}
         </div>
       )}
-    </div>
+    </main>
   );
 }
