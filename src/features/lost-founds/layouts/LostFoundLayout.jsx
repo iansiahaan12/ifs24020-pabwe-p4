@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { Outlet, useNavigate, Link } from 'react-router-dom';
 import { getAccessToken, removeAccessToken } from '../../../helpers/apiHelper';
 
 export default function LostFoundLayout() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const token = getAccessToken();
@@ -21,35 +19,38 @@ export default function LostFoundLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      {/* Navbar Sederhana */}
+      {/* Header & Navigasi */}
       <header className="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center shadow-sm">
-        <h1 className="text-xl font-bold text-blue-600">Lost & Founds App</h1>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate('/')}
-            className="text-sm font-medium text-slate-600 hover:text-blue-600"
+        <Link to="/" className="text-xl font-bold text-blue-600 hover:text-blue-700 transition" aria-label="Lost & Founds App Beranda">
+          Lost &amp; Founds App
+        </Link>
+        <nav aria-label="Menu Utama" className="flex items-center gap-4">
+          <Link
+            to="/"
+            className="text-sm font-medium text-slate-600 hover:text-blue-600 transition"
           >
             Beranda
-          </button>
-          <button
-            onClick={() => navigate('/users')}
-            className="text-sm font-medium text-slate-600 hover:text-blue-600"
+          </Link>
+          <Link
+            to="/users"
+            className="text-sm font-medium text-slate-600 hover:text-blue-600 transition"
           >
             Pengguna
-          </button>
-          <button
-            onClick={() => navigate('/profile')}
-            className="text-sm font-medium text-slate-600 hover:text-blue-600"
+          </Link>
+          <Link
+            to="/profile"
+            className="text-sm font-medium text-slate-600 hover:text-blue-600 transition"
           >
             Profil
-          </button>
+          </Link>
           <button
             onClick={handleLogout}
+            type="button"
             className="px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-sm font-medium hover:bg-red-100 transition"
           >
             Keluar
           </button>
-        </div>
+        </nav>
       </header>
 
       {/* Konten Utama */}

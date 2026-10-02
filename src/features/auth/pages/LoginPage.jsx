@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { asyncLoginUser } from '../states/authSlice';
 import useInput from '../../../hooks/useInput';
+import useDocumentTitle from '../../../hooks/useDocumentTitle';
 
 export default function LoginPage() {
+  useDocumentTitle('Masuk', 'Silakan masuk ke Lost & Founds App untuk melaporkan atau mengelola barang hilang dan temuan.');
+
   const [email, onEmailChange] = useInput('');
   const [password, onPasswordChange] = useInput('');
   const dispatch = useDispatch();
@@ -22,14 +24,17 @@ export default function LoginPage() {
   return (
     <main role="main" className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
       <div className="max-w-md w-full bg-white rounded-xl shadow-md p-8 border border-slate-200">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2 text-center">Masuk ke Lost & Founds</h1>
+        <h1 className="text-2xl font-bold text-slate-800 mb-2 text-center">Masuk ke Lost &amp; Founds</h1>
         <p className="text-sm text-slate-500 mb-6 text-center">Silakan masuk untuk melanjutkan laporan</p>
         <form onSubmit={onSubmitHandler} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+            <label htmlFor="login-email-input" className="block text-sm font-medium text-slate-700 mb-1">
+              Email
+            </label>
             <input
               id="login-email-input"
               type="email"
+              autoComplete="email"
               value={email}
               onChange={onEmailChange}
               required
@@ -38,10 +43,13 @@ export default function LoginPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Kata Sandi</label>
+            <label htmlFor="login-password-input" className="block text-sm font-medium text-slate-700 mb-1">
+              Kata Sandi
+            </label>
             <input
               id="login-password-input"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={onPasswordChange}
               required

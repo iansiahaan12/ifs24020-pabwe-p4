@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncGetAuthUser } from './features/auth/states/authSlice';
@@ -10,6 +10,8 @@ import HomePage from './features/lost-founds/pages/HomePage';
 import DetailPage from './features/lost-founds/pages/DetailPage';
 import UsersPage from './features/users/pages/UsersPage';
 import ProfilePage from './features/users/pages/ProfilePage';
+
+import LostFoundLayout from './features/lost-founds/layouts/LostFoundLayout';
 
 const ProtectedRoute = () => {
   const { isAuthLogin } = useSelector((state) => state.auth);
@@ -36,11 +38,13 @@ function App() {
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/lost-founds" element={<HomePage />} />
-        <Route path="/lost-founds/:id" element={<DetailPage />} />
-        <Route path="/users" element={<UsersPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route element={<LostFoundLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/lost-founds" element={<HomePage />} />
+          <Route path="/lost-founds/:id" element={<DetailPage />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
       </Route>
 
       {/* Fallback */}

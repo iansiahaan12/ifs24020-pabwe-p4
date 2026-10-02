@@ -24,11 +24,27 @@ export async function apiHelper(endpoint, options = {}) {
     headers['Accept'] = 'application/json';
   }
 
-  const response = await fetch(`${DELCOM_BASEURL}${endpoint}`, {
-    ...options,
-    headers,
-  });
+  try {
+    const response = await fetch(`${DELCOM_BASEURL}${endpoint}`, {
+      ...options,
+      headers,
+    });
 
-  const responseJson = await response.json();
-  return responseJson;
+    let responseJson;
+    try {
+      responseJson = await response.json();
+    } catch {
+      responseJson = {
+        status: response.ok ? 'success' : 'fail',
+        message: response.statusText || 'Terjadi kesalahan format respon dari server',
+      };
+    }
+
+    return responseJson;
+  } catch (error) {
+    return {
+      status: 'error',
+      message: error?.message || 'Gagal terhubung ke server. Periksa koneksi internet Anda.',
+    };
+  }
 }
