@@ -26,6 +26,28 @@ export default defineConfig(({ mode }) => {
     build: {
       cssCodeSplit: true,
       sourcemap: false,
+      chunkSizeWarningLimit: 600,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('sweetalert2')) {
+                return 'sweetalert2'
+              }
+              if (id.includes('@reduxjs/toolkit') || id.includes('react-redux')) {
+                return 'redux-vendor'
+              }
+              if (id.includes('react-router-dom') || id.includes('react-router')) {
+                return 'router-vendor'
+              }
+              if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
+                return 'react-vendor'
+              }
+              return 'vendor'
+            }
+          },
+        },
+      },
     },
     test: {
       globals: true,

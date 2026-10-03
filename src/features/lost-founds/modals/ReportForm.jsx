@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useInput from "../../../hooks/useInput";
-import { inputCls } from "../../auth/pages/LoginPage";
+
+const inputCls = "mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[44px]";
 
 export default function ReportForm({ initial = {}, withCompleted, submitLabel, onSubmit }) {
   const [title, setTitle] = useInput(initial.title || "");
