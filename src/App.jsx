@@ -25,9 +25,10 @@ const ProtectedRoute = () => {
 };
 
 const PageLoader = () => (
-  <div className="min-h-[50vh] flex items-center justify-center p-6 text-slate-500">
-    <p className="text-sm font-medium">Memuat...</p>
-  </div>
+  <main className="min-h-screen flex flex-col items-center justify-center p-6 text-slate-500 bg-slate-50">
+    <h1 className="text-xl font-bold text-slate-800 mb-2">Lost &amp; Founds App</h1>
+    <p className="text-sm font-medium text-slate-600">Memuat halaman...</p>
+  </main>
 );
 
 function App() {
