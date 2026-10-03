@@ -10,6 +10,10 @@
       "source": "/(.*)",
       "headers": [
         {
+          "key": "Cache-Control",
+          "value": "public, max-age=300"
+        },
+        {
           "key": "X-Robots-Tag",
           "value": "all, index, follow"
         },
