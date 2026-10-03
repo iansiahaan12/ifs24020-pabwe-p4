@@ -45,6 +45,7 @@ export default function RegisterPage() {
             </label>
             <input
               id="register-name-input"
+              name="name"
               type="text"
               autoComplete="name"
               value={name}
@@ -60,6 +61,7 @@ export default function RegisterPage() {
             </label>
             <input
               id="register-email-input"
+              name="email"
               type="email"
               autoComplete="email"
               value={email}
@@ -75,6 +77,7 @@ export default function RegisterPage() {
             </label>
             <input
               id="register-password-input"
+              name="password"
               type="password"
               autoComplete="new-password"
               value={password}
@@ -90,6 +93,7 @@ export default function RegisterPage() {
             </label>
             <input
               id="register-password-confirmation-input"
+              name="password_confirmation"
               type="password"
               autoComplete="new-password"
               value={passwordConfirmation}

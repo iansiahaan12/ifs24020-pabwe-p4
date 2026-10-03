@@ -36,6 +36,7 @@ export default function LoginPage() {
             </label>
             <input
               id="login-email-input"
+              name="email"
               type="email"
               autoComplete="email"
               value={email}
@@ -51,6 +52,7 @@ export default function LoginPage() {
             </label>
             <input
               id="login-password-input"
+              name="password"
               type="password"
               autoComplete="current-password"
               value={password}
