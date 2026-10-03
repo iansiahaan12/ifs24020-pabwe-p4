@@ -29,8 +29,22 @@ export default function DetailPage() {
     fetchDetail();
   }, [id]);
 
-  if (loading) return <main className="text-center py-10"><p className="text-slate-500">Memuat rincian...</p></main>;
-  if (!item) return <main className="text-center py-10"><p className="text-red-700 font-medium">Data tidak ditemukan.</p></main>;
+  if (loading) {
+    return (
+      <main className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">Detail Laporan Barang</h1>
+        <p className="text-slate-500">Memuat rincian informasi...</p>
+      </main>
+    );
+  }
+  if (!item) {
+    return (
+      <main className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">Data Tidak Ditemukan</h1>
+        <p className="text-red-700 font-medium">Laporan barang yang dicari tidak tersedia.</p>
+      </main>
+    );
+  }
 
   return (
     <main className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8">
